@@ -1,0 +1,24 @@
+name: GitHub-hosted runner smoke test
+
+on:
+  push:
+    branches:
+      - diagnostics/github-hosted-runner-smoke
+
+permissions:
+  contents: read
+
+jobs:
+  runner-smoke:
+    name: Verify GitHub-hosted Ubuntu runner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Confirm runner allocation
+        run: |
+          echo "runner-smoke=started"
+          echo "runner-os=$RUNNER_OS"
+          echo "runner-arch=$RUNNER_ARCH"
+          echo "runner-name=$RUNNER_NAME"
+          test "$RUNNER_OS" = "Linux"
+          test -n "$RUNNER_NAME"
